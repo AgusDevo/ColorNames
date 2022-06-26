@@ -11,7 +11,7 @@ class ColoredHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -21,7 +21,7 @@ class ColoredHistory extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'Las últimas letras en ser coloreadas fueron: \n \n$coloredNumberList',
+          'Las últimas letras en ser coloreadas fueron: \n \n${coloredNumberList.toString().replaceAll('[', '').replaceAll(']', '')}',
           textAlign: TextAlign.center,
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
         ),

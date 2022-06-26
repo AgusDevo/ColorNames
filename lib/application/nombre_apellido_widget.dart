@@ -23,30 +23,34 @@ class NombreApellidoWidget extends StatelessWidget {
       ),
       body: Center(
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Column(
-                children: [
-                  UserNameInput(nameController: _nameController),
-                  Image.network('https://i.imgur.com/A3evXUF.png'),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextButton(
-                      onPressed: () {
-                        _generateRandomList(context);
-                      },
-                      child: const Text('Colorear Nombre'),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Column(
+                  children: [
+                    UserNameInput(nameController: _nameController),
+                    Image.network('https://i.imgur.com/A3evXUF.png'),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextButton(
+                        onPressed: () {
+                          _generateRandomList(context);
+                        },
+                        child: const Text('Colorear Nombre'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              ColoredHistory(coloredNumberList: userProvider.coloredNumberList),
-            ],
+                  ],
+                ),
+                ColoredHistory(
+                    coloredNumberList: userProvider.coloredNumberList),
+              ],
+            ),
           ),
         ),
       ),
