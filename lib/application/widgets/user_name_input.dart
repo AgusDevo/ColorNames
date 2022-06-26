@@ -16,7 +16,7 @@ class UserNameInput extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: GeminusTextFormField(
         inputDecoration: InputDecoration(
-          hintText: 'Nombre y apellido', //'Nombre y apellido'
+          hintText: 'Nombre y apellido',
           border: const OutlineInputBorder(),
           suffixIcon: IconButton(
               onPressed: () {
