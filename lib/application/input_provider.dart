@@ -15,7 +15,7 @@ class InputProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int? get nameLength => _userInput?.length;
+  int? get nameLength => _spacelessName.length;
 
   String get spacelessName => _spacelessName;
 
