@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pruebagemi/application/widgets/recently_colored.dart';
+import 'package:pruebagemi/application/widgets/colored_history.dart';
 import 'package:pruebagemi/application/widgets/user_name_input.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'dart:math' as math;
 
 class NombreApellidoWidget extends StatefulWidget {
@@ -57,7 +58,7 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
                   ),
                 ],
               ),
-              RecentlyColored(coloredNumberList: coloredNumberList),
+              ColoredHistory(coloredNumberList: coloredNumberList),
             ],
           ),
         ),

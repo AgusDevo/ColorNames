@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RecentlyColored extends StatelessWidget {
-  const RecentlyColored({
+class ColoredHistory extends StatelessWidget {
+  const ColoredHistory({
     Key? key,
     required this.coloredNumberList,
   }) : super(key: key);
