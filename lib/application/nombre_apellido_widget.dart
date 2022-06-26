@@ -95,12 +95,16 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          elevation: 10,
           title: const Text('¡Colores!'),
           content: _colorearTexto(randomNumberList),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(randomNumberList);
+                Navigator.of(context).pop();
                 randomNumberList.clear();
               },
               child: const Text('Aceptar'),
@@ -120,7 +124,7 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
     return RichText(
       text: TextSpan(
         text: 'El nombre ingresado es: \n',
-        style: const TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black, fontSize: 22),
         children: <TextSpan>[
           TextSpan(
             text: spacelessName.substring(0, randomNumberList[0]),
