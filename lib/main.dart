@@ -16,7 +16,14 @@ class App extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => InputProvider(),
       child: MaterialApp(
-        home: const NombreApellido(),
+        home: const NombreApellidoWidget(
+            /* 
+          coloredNumberList: const [],
+          nameLength: 0,
+          spacelessName: '',
+          userInput: '',
+          randomNumberList: const [], */
+            ),
         theme: ApplicationTheme.light,
         debugShowCheckedModeBanner: false,
       ),
