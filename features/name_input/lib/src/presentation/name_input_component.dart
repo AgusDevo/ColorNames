@@ -10,7 +10,7 @@ class NameInputComponent extends StatefulWidget {
   final String _hintText;
   final String _nameEmptyText;
   final String _nameFormatInvalid;
-  NameInputComponent(
+  const NameInputComponent(
       {Key? key,
       required NameInputCubit cubit,
       required Function(BuildContext, String name) onNameInputSuccessful,
@@ -47,7 +47,6 @@ class _NameInputComponentState extends State<NameInputComponent> {
   @override
   void dispose() {
     super.dispose();
-
     _nameController.dispose();
   }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pruebagemi/application/input_provider.dart';
 import 'package:pruebagemi/application/nombre_apellido_widget.dart';
 import 'package:pruebagemi/application/application_theme.dart';
 
@@ -11,10 +13,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const NombreApellidoWidget(),
-      theme: ApplicationTheme.light,
-      debugShowCheckedModeBanner: false,
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => InputProvider(),
+      child: MaterialApp(
+        home: const NombreApellido(),
+        theme: ApplicationTheme.light,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

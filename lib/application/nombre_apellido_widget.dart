@@ -1,31 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pruebagemi/application/input_provider.dart';
 import 'package:pruebagemi/application/widgets/colored_history.dart';
 import 'package:pruebagemi/application/widgets/user_name_input.dart';
 import 'dart:math' as math;
 
-class NombreApellidoWidget extends StatefulWidget {
-  const NombreApellidoWidget({Key? key}) : super(key: key);
-
-  @override
-  State<NombreApellidoWidget> createState() => _NombreApellidoWidgetState();
-}
-
-class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
-  final TextEditingController _nameController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  int nameLength = 0;
-  String userInput = '';
-  String spacelessName = '';
-  List<int> randomNumberList = [];
-  List<String> coloredNumberList = [];
+class NombreApellido extends StatelessWidget {
+  const NombreApellido({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final inputProvider = Provider.of<InputProvider>(context);
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
@@ -43,7 +30,7 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
             children: <Widget>[
               Column(
                 children: [
-                  UserNameInput(nameController: _nameController),
+                  UserNameInput(nameController: inputProvider.nameController),
                   Image.network('https://i.imgur.com/A3evXUF.png'),
                   Container(
                     padding: const EdgeInsets.all(10),
@@ -51,13 +38,14 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(10)),
                     child: TextButton(
-                      onPressed: _generateRandomList,
+                      onPressed: _generateRandomList(inputProvider, context),
                       child: const Text('Colorear Nombre'),
                     ),
                   ),
                 ],
               ),
-              ColoredHistory(coloredNumberList: coloredNumberList),
+              ColoredHistory(
+                  coloredNumberList: inputProvider.coloredNumberList),
             ],
           ),
         ),
@@ -65,30 +53,20 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
     );
   }
 
-  Container colorButton() {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Colors.grey.shade200, borderRadius: BorderRadius.circular(10)),
-      child: TextButton(
-        onPressed: _generateRandomList,
-        child: const Text('Colorear Nombre'),
-      ),
-    );
+  _generateRandomList(InputProvider inputProvider, BuildContext context) {
+    inputProvider.userInput = inputProvider.nameController.text;
+    inputProvider.spacelessName =
+        inputProvider.nameController.text.replaceAll(' ', '');
+    if (inputProvider.nameLength == null) {
+      return;
+    }
+    List<int> newList = fillList(length: 3, range: inputProvider.nameLength!);
+    inputProvider.randomNumberList = newList;
+    _dialog(inputProvider, context);
   }
 
-  _generateRandomList() {
-    userInput = _nameController.text;
-    spacelessName = _nameController.text.replaceAll(' ', '');
-    nameLength = spacelessName.length;
-
-    List<int> newList = fillList(length: 3, range: nameLength);
-    _dialog(newList);
-    setState(() {});
-  }
-
-  Future<void> _dialog(List<int> randomNumberList) async {
+  Future<void> _dialog(
+      InputProvider inputProvider, BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -99,12 +77,12 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
           ),
           elevation: 10,
           title: const Text('¡Colores!'),
-          content: _colorearTexto(randomNumberList),
+          content: _colorearTexto(inputProvider),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                randomNumberList.clear();
+                inputProvider.randomNumberList.clear();
               },
               child: const Text('Aceptar'),
             ),
@@ -114,10 +92,11 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
     );
   }
 
-  RichText _colorearTexto(List<int> randomNumberList) {
-    coloredNumberList.clear();
+  RichText _colorearTexto(InputProvider inputProvider) {
+    inputProvider.coloredNumberList.clear();
     for (var i = 0; i < 3; i++) {
-      coloredNumberList.add(spacelessName[randomNumberList[i]]);
+      inputProvider.coloredNumberList
+          .add(inputProvider.spacelessName[inputProvider.randomNumberList[i]]);
     }
 
     return RichText(
@@ -126,30 +105,37 @@ class _NombreApellidoWidgetState extends State<NombreApellidoWidget> {
         style: const TextStyle(color: Colors.black, fontSize: 22),
         children: <TextSpan>[
           TextSpan(
-            text: spacelessName.substring(0, randomNumberList[0]),
+            text: inputProvider.spacelessName
+                .substring(0, inputProvider.randomNumberList[0]),
           ),
           TextSpan(
-            text: spacelessName[randomNumberList[0]],
+            text:
+                inputProvider.spacelessName[inputProvider.randomNumberList[0]],
             style: TextStyle(color: Colors.red.shade800),
           ),
           TextSpan(
-            text: spacelessName.substring(
-                randomNumberList[0] + 1, randomNumberList[1]),
+            text: inputProvider.spacelessName.substring(
+                inputProvider.randomNumberList[0] + 1,
+                inputProvider.randomNumberList[1]),
           ),
           TextSpan(
-            text: spacelessName[randomNumberList[1]],
+            text:
+                inputProvider.spacelessName[inputProvider.randomNumberList[1]],
             style: TextStyle(color: Colors.red.shade800),
           ),
           TextSpan(
-            text: spacelessName.substring(
-                randomNumberList[1] + 1, randomNumberList[2]),
+            text: inputProvider.spacelessName.substring(
+                inputProvider.randomNumberList[1] + 1,
+                inputProvider.randomNumberList[2]),
           ),
           TextSpan(
-            text: spacelessName[randomNumberList[2]],
+            text:
+                inputProvider.spacelessName[inputProvider.randomNumberList[2]],
             style: TextStyle(color: Colors.red.shade800),
           ),
           TextSpan(
-            text: spacelessName.substring(randomNumberList[2] + 1),
+            text: inputProvider.spacelessName
+                .substring(inputProvider.randomNumberList[2] + 1),
           ),
         ],
       ),
